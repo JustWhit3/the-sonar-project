@@ -2,6 +2,8 @@
 #     Personal files
 ############################################
 .vscode
+data/sonar.all-data.csv
+img/tests
 
 ############################################
 #     Binary files
