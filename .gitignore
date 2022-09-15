@@ -2,7 +2,7 @@
 #     Personal files
 ############################################
 .vscode
-data/sonar.all-data.csv
+data/*
 img/tests
 notes.txt
 

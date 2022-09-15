@@ -14,7 +14,7 @@ import sys
 from emoji import emojize
 from termcolor import colored as cl
 
-# Data analysis
+# Data science
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -54,18 +54,17 @@ def apply_operation( operation, data ):
 def feature_selection( data, print_steps = False ):
 
     # Variables
-    label = data[ "60" ]
-    n_of_features = 14 
+    label = data[ "60" ] 
     array = data.values
     X = array[ :, 0:60 ]
     Y = array[ :, 60 ]
 
     # Tests
     if print_steps == True:
-        test = SelectKBest(score_func=chi2, k=3)
-        fit = test.fit(X, Y)
+        test = SelectKBest( score_func = chi2, k = 3 )
+        fit = test.fit( X, Y )
         print( end = "\n\n" )
-        print(fit.scores_)
+        print( fit.scores_ )
     
     # Feature selection
     X_new = SelectKBest( score_func = chi2, k = n_of_features ).fit_transform( X, Y ) # TODO: change k
@@ -114,6 +113,9 @@ def process_dataset( print_steps = False ):
     print( emojize( ":check_mark_button:" ) )
     if print_steps == True:
         print( data )
+        
+    # Renaming the last column
+    data.rename( columns = { "60": "Label" }, inplace = True )
     
     return data
 
@@ -129,7 +131,6 @@ def utility_plots( data ):
     """
 
     # Variables and constants
-    utility_path = "../../img/utility"
     dimension = ( 4, 4 )
     
     # Histograms
@@ -147,7 +148,7 @@ def utility_plots( data ):
     
     # Box plots
     print( "- Printing box plots ", end = "" )
-    data.plot( kind = "box", subplots = True, layout = dimension, sharex = False, sharey = False )
+    data.plot( kind = "box", layout = dimension, sharex = False, sharey = False )
     save_img( "box", utility_path )
     print( emojize( ":check_mark_button:" ) )
     
@@ -178,14 +179,28 @@ def utility_plots( data ):
 #################################################
 def main():
     
+    # Global variables
+    global utility_path, n_of_features
+    utility_path = "../../img/utility"
+    n_of_features = 14
+    
+    # Variables
+    data_path = "../../data"
+    
     # Processing the dataset
     print( cl( "Dataset operations:", "green" ) )
     data = process_dataset( print_steps = False )
+    data.to_csv( "{}/{}".format( data_path, "processed_data.csv" ) )
     print()
     
     # Printing utility plots
     print( cl( "Plotting utils:", "green" ) )
     utility_plots( data )
-
+    print()
+    
+    # Extra information
+    print( "Plots have been saved in:", cl( utility_path, "yellow" ) )
+    print( "Processed data has been saved in:", cl( data_path, "yellow" ) )
+    
 if __name__ == "__main__":
     main()
