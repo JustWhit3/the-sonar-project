@@ -61,7 +61,7 @@ def feature_selection( data, print_steps = False ):
         print_steps (bool, optional): Choose if printing debugging steps or not. Defaults to False.
 
     Returns:
-        _type_: _description_
+        pandas.DataFrame: The processed dataset.
     """
 
     # Variables
@@ -78,7 +78,7 @@ def feature_selection( data, print_steps = False ):
         print( fit.scores_ )
     
     # Feature selection
-    X_new = SelectKBest( score_func = chi2, k = n_of_features ).fit_transform( X, Y )
+    X_new = SelectKBest( score_func = chi2, k = int( args.n_of_features ) ).fit_transform( X, Y )
     X_new_df = pd.DataFrame( X_new, index = data.index, columns = new_names )
     data = X_new_df.join( label )
     
@@ -100,7 +100,7 @@ def process_dataset( print_steps = False ):
 
     # Loading the dataset
     print( "- Loading the dataset ", end = "" )
-    data = pd.read_csv( "../../data/sonar.all-data.csv", names = names )
+    data = pd.read_csv( args.data, names = names )
     data.rename( columns = { "F60": "C" }, inplace = True )
     print( emojize( ":check_mark_button:" ) )
     if print_steps == True:
@@ -141,7 +141,8 @@ def utility_plots( data ):
     """
 
     # Variables and constants
-    dimension = ( 4, 4 )
+    dim = int( int( args.n_of_features ) / 3 )
+    dimension = ( dim, dim )
     
     # Histograms
     print( "- Printing histograms of each column ", end = "" )
@@ -190,18 +191,20 @@ def utility_plots( data ):
 def main():
     
     # Global variables
-    global utility_path, n_of_features, names, new_names
+    global utility_path, names, new_names
     names = [ "F" + str( name ) for name in range( 0, 61 ) ]
-    new_names = [ "F" + str( name ) for name in range( 0, 14 ) ]
+    new_names = [ "F" + str( name ) for name in range( 0, int( args.n_of_features ) ) ]
     utility_path = "../../img/utility"
-    n_of_features = 14
     
     # Variables
     data_path = "../../data"
     
     # Processing the dataset
     print( cl( "Dataset operations:", "green" ) )
-    data = process_dataset( print_steps = True )
+    if args.debugging == "on":
+        data = process_dataset( print_steps = True )
+    elif args.debugging == "off":
+        data = process_dataset( print_steps = False )
     if not os.path.exists( data_path ):
         os.makedirs( data_path )
     data.to_csv( "{}/{}".format( data_path, "processed_data.csv" ) )
@@ -217,4 +220,13 @@ def main():
     print( "Processed data has been saved in:", cl( data_path, "yellow" ) )
     
 if __name__ == "__main__":
+
+    # Argument parser settings
+    parser = ap.ArgumentParser( description = "Argument parser for data preparation." ) 
+    parser.add_argument( "--data", default = "../../data/sonar.all-data.csv", help = "Input dataset." )
+    parser.add_argument( "--debugging", default = "off", help = "Set debugging option (on/off)." )
+    parser.add_argument( "--n_of_features", default = 60, help = "Select the number of important features." )
+    args = parser.parse_args()
+
+    # Running the program
     main()
