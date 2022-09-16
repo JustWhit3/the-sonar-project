@@ -23,8 +23,7 @@ from sklearn.preprocessing import StandardScaler, Normalizer
 from sklearn.feature_selection import SelectKBest, chi2
 
 # Personal modules
-sys.path.append( ".." )
-from utils.generic import save_img
+from utils import save_img
 
 #################################################
 #     apply_operation
@@ -194,10 +193,10 @@ def main():
     global utility_path, names, new_names
     names = [ "F" + str( name ) for name in range( 0, 61 ) ]
     new_names = [ "F" + str( name ) for name in range( 0, int( args.n_of_features ) ) ]
-    utility_path = "../../img/utility"
+    utility_path = "../img/utility"
     
     # Variables
-    data_path = "../../data"
+    data_path = "../data"
     
     # Processing the dataset
     print( cl( "Dataset operations:", "green" ) )
@@ -223,7 +222,7 @@ if __name__ == "__main__":
 
     # Argument parser settings
     parser = ap.ArgumentParser( description = "Argument parser for data preparation." ) 
-    parser.add_argument( "--data", default = "../../data/sonar.all-data.csv", help = "Input dataset." )
+    parser.add_argument( "--data", default = "../data/sonar.all-data.csv", help = "Input dataset." )
     parser.add_argument( "--debugging", default = "off", help = "Set debugging option (on/off)." )
     parser.add_argument( "--n_of_features", default = 60, help = "Select the number of important features." )
     args = parser.parse_args()

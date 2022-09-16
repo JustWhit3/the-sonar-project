@@ -10,7 +10,7 @@ if [ "$1" == "" ] || [ "$1" == "processing" ] ; then
     echo ""
 
     ./data_preparation.py \
-    --data="../../data/sonar.all-data.csv" \
+    --data="../data/sonar.all-data.csv" \
     --debugging="off" \
     --n_of_features=14
 fi
@@ -27,6 +27,7 @@ if [ "$1" == "" ] || [ "$1" == "modelling" ] ; then
     echo ""
 
     ./modelling.py \
-    --data="../../data/processed_data.csv" \
-    --n_of_folds=10
+    --data="../data/processed_data.csv" \
+    --n_of_folds=10 \
+    --hyperparametrization="off"
 fi
