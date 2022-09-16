@@ -16,7 +16,7 @@ import argparse as ap
 
 # Data science
 import pandas as pd
-from sklearn.model_selection import KFold, cross_val_score, cross_val_predict
+from sklearn.model_selection import KFold, cross_val_score, cross_val_predict, GridSearchCV
 from sklearn.metrics import confusion_matrix, mean_absolute_error
 from sklearn.model_selection import learning_curve
 import matplotlib.pyplot as plt
@@ -103,6 +103,8 @@ def plot_learning_curve( estimator, title, X, y, axes = None, ylim = None, cv = 
     axes[2].set_xlabel( "fit_times" )
     axes[2].set_ylabel( "Score" )
     axes[2].set_title( "Performance of the model" )
+    
+    return plt
 
 #################################################
 #     box_plot
@@ -125,10 +127,10 @@ def modelling( model, str_name, X, Y ):
     print( "Model:", cl( str_name, "green" ) )
     num_folds = int( args.n_of_folds )
     kfold = KFold( n_splits = num_folds, random_state = 7, shuffle = True )
-    
-    # Plotting learning curve to check for possible overfitting
-    plot_learning_curve( model, str_name, X, Y )
-    save_img( str_name.replace( " ", "_" ), "{}/learning_curves".format( model_path ) )
+
+    # Plotting learning curves for accuracy
+    plot_learning_curve( model, "{} (accuracy)".format( str_name ), X, Y, cv = kfold, scoring = "accuracy" )
+    save_img( str_name.replace( " ", "_" ), "{}/learning_curves/accuracy".format( model_path ) )
     
     # Accuracy
     result_acc = cross_val_score( model, X, Y, cv = kfold, scoring = "accuracy" )
@@ -156,6 +158,28 @@ def modelling( model, str_name, X, Y ):
     save_img( str_name.replace( " ", "_" ), "{}/confusion_matrix".format( model_path ) )
     
     return result_acc, result_nll, result_auc
+
+#################################################
+#     hyperparametrization
+#################################################
+def hyperparametrization( model, X, Y ):
+
+    # Setting parameters for different models
+    if type( model ).__name__ == "KNeighborsClassifier":
+        param_grid = { 
+            "n_neighbors": np.arange( 1,30 ),
+            "algorithm": [ "auto", "ball_tree", "kd_tree", "brute" ],
+            "metric": [ "euclidean", "manhattan", "chebyshev", "minkowski" ]
+            }
+       
+    # Applying grid search 
+    num_folds = int( args.n_of_folds )
+    kfold = KFold( n_splits = num_folds, random_state = 7, shuffle = True )
+    grid = GridSearchCV( model, param_grid = param_grid, cv=kfold )
+    grid.fit(X, Y)
+    best_estimator = grid.best_estimator_
+    
+    return best_estimator
 
 #################################################
 #     Main
@@ -191,6 +215,7 @@ def main():
         results_acc.append( r_[0] )
         results_nll.append( r_[1] )
         results_auc.append( r_[2] )
+        print( "Hyperparametrization:", hyperparametrization( model_name, X, Y ) )
     
     # Doing box plots
     names = [ "LR", "LDA", "KNN", "CART", "NB", "SVM" ]
