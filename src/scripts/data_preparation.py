@@ -10,9 +10,10 @@ Author: Gianluca Bianco
 #################################################
 
 # Generic modules
-import sys
+import sys, os
 from emoji import emojize
 from termcolor import colored as cl
+import argparse as ap
 
 # Data science
 import pandas as pd
@@ -41,9 +42,9 @@ def apply_operation( operation, data ):
     """
     
     nolabel_data = data.iloc[: , :-1]
-    label = data[ "60" ]
+    label = data[ "C" ]
     scaled_data = operation.fit_transform( nolabel_data )
-    scaled_data_df = pd.DataFrame( scaled_data, index = data.index, columns = data.columns[ 0: -1 ] )
+    scaled_data_df = pd.DataFrame( scaled_data, index = data.index, columns = new_names )
     data = scaled_data_df.join( label )
     
     return data
@@ -52,9 +53,19 @@ def apply_operation( operation, data ):
 #     feature_selection
 #################################################
 def feature_selection( data, print_steps = False ):
+    """
+    Function used to perform feature selection on data.
+
+    Args:
+        data (pandas.DataFrame): the dataframe to be analyzed.
+        print_steps (bool, optional): Choose if printing debugging steps or not. Defaults to False.
+
+    Returns:
+        _type_: _description_
+    """
 
     # Variables
-    label = data[ "60" ] 
+    label = data[ "C" ] 
     array = data.values
     X = array[ :, 0:60 ]
     Y = array[ :, 60 ]
@@ -67,8 +78,8 @@ def feature_selection( data, print_steps = False ):
         print( fit.scores_ )
     
     # Feature selection
-    X_new = SelectKBest( score_func = chi2, k = n_of_features ).fit_transform( X, Y ) # TODO: change k
-    X_new_df = pd.DataFrame( X_new, index = data.index, columns = range( n_of_features ) )
+    X_new = SelectKBest( score_func = chi2, k = n_of_features ).fit_transform( X, Y )
+    X_new_df = pd.DataFrame( X_new, index = data.index, columns = new_names )
     data = X_new_df.join( label )
     
     return data
@@ -80,15 +91,17 @@ def process_dataset( print_steps = False ):
     """
     Function used to load and preprocess the dataset.
 
+    Args:
+        print_steps (bool, optional): Choose if printing debugging steps or not. Defaults to False.
+
     Returns:
         pandas.DataFrame: the modified and loaded dataset.
-        bool: Choose if printing debugging steps or not. Default False.
     """
 
     # Loading the dataset
     print( "- Loading the dataset ", end = "" )
-    names = [ str( name ) for name in range( 0, 61 ) ]
     data = pd.read_csv( "../../data/sonar.all-data.csv", names = names )
+    data.rename( columns = { "F60": "C" }, inplace = True )
     print( emojize( ":check_mark_button:" ) )
     if print_steps == True:
         print( data )
@@ -113,9 +126,6 @@ def process_dataset( print_steps = False ):
     print( emojize( ":check_mark_button:" ) )
     if print_steps == True:
         print( data )
-        
-    # Renaming the last column
-    data.rename( columns = { "60": "Label" }, inplace = True )
     
     return data
 
@@ -180,7 +190,9 @@ def utility_plots( data ):
 def main():
     
     # Global variables
-    global utility_path, n_of_features
+    global utility_path, n_of_features, names, new_names
+    names = [ "F" + str( name ) for name in range( 0, 61 ) ]
+    new_names = [ "F" + str( name ) for name in range( 0, 14 ) ]
     utility_path = "../../img/utility"
     n_of_features = 14
     
@@ -189,7 +201,9 @@ def main():
     
     # Processing the dataset
     print( cl( "Dataset operations:", "green" ) )
-    data = process_dataset( print_steps = False )
+    data = process_dataset( print_steps = True )
+    if not os.path.exists( data_path ):
+        os.makedirs( data_path )
     data.to_csv( "{}/{}".format( data_path, "processed_data.csv" ) )
     print()
     

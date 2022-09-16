@@ -8,9 +8,13 @@ Author: Gianluca Bianco
 #################################################
 #     Libraries
 #################################################
+
+# Generic modules
 import doctest
-import matplotlib.pyplot as plt
 import os
+
+# Data science
+import matplotlib.pyplot as plt
 
 #################################################
 #     save_img
