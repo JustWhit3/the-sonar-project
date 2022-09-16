@@ -17,9 +17,11 @@ import argparse as ap
 # Data science
 import pandas as pd
 from sklearn.model_selection import KFold, cross_val_score, cross_val_predict
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, mean_absolute_error
+from sklearn.model_selection import learning_curve
 import matplotlib.pyplot as plt
 import seaborn as sn
+import numpy as np
 
 # Models
 from sklearn.linear_model import LogisticRegression
@@ -34,22 +36,73 @@ sys.path.append( ".." )
 from utils.generic import save_img
 
 #################################################
-#     MAE_vs_fold
+#     plot_learning_curve
 #################################################
-def MAE_vs_fold( kfold, X, Y ):
-    
-    mae_train = []
-    mae_test = []
-    for train_index, test_index in kfold.split(X):
+def plot_learning_curve( estimator, title, X, y, axes = None, ylim = None, cv = None, n_jobs = None, scoring = None, train_sizes = np.linspace( 0.1, 1.0, 5 ), ):
+    """
+    Generate 3 plots: the test and training learning curve, the training samples vs fit times curve, the fit times vs score curve. Taken from here: https://scikit-learn.org/stable/auto_examples/model_selection/plot_learning_curve.html.
 
-       X_train, X_test = X.iloc[train_index], X.iloc[test_index]
-       y_train, y_test = y[train_index], y[test_index]
-       model = KNeighborsClassifier(n_neighbors=2)
-       model.fit(X_train, y_train)
-       y_train_pred = model.predict(X_train)
-       y_test_pred = model.predict(X_test)
-       mae_train.append(mean_absolute_error(y_train, y_train_pred))
-       mae_test.append(mean_absolute_error(y_test, y_test_pred))
+    Args:
+        estimator (sklearn): An estimator instance implementing `fit` and `predict` methods which
+        will be cloned for each validation.
+        title (str): Title for the chart.
+        X (numpy.array): array-like of shape (n_samples, n_features). Training vector, where ``n_samples`` is the number of samples and
+        ``n_features`` is the number of features.
+        y (numpy.array): array-like of shape (n_samples) or (n_samples, n_features). Target relative to ``X`` for classification or regression;
+        axes (numpy.array, optional): array-like of shape (3,). Axes to use for plotting the curves. Defaults to None.
+        ylim (numpy.array, optional): tuple of shape (2,). Defines minimum and maximum y-values plotted, e.g. (ymin, ymax). Defaults to None.
+        cv (int, optional): cross-validation generator or an iterable. Determines the cross-validation splitting strategy.
+        Possible inputs for cv are:. Defaults to None.
+        n_jobs (int, optional): nt or None. Number of jobs to run in parallel. Defaults to None.
+        scoring (str, optional): a str (see model evaluation documentation) or a scorer callable object / function with signature
+        ``scorer(estimator, X, y)``.. Defaults to None.
+        train_sizes (numpy.array, optional): array-like of shape (n_ticks,). Relative or absolute numbers of training examples that will be used to generate the learning curve.. Defaults to np.linspace( 0.1, 1.0, 5 ).
+    """
+
+    if axes is None:
+        _, axes = plt.subplots( 1, 3, figsize = ( 20, 5 ) )
+
+    axes[0].set_title( title )
+    if ylim is not None:
+        axes[0].set_ylim( *ylim )
+    axes[0].set_xlabel( "Training examples" )
+    axes[0].set_ylabel( "Score" )
+
+    train_sizes, train_scores, test_scores, fit_times, _ = learning_curve( estimator, X, y, scoring = scoring, cv = cv, n_jobs = n_jobs, train_sizes = train_sizes, return_times = True, )
+    train_scores_mean = np.mean( train_scores, axis = 1 )
+    train_scores_std = np.std( train_scores, axis = 1 )
+    test_scores_mean = np.mean( test_scores, axis = 1 )
+    test_scores_std = np.std( test_scores, axis = 1 )
+    fit_times_mean = np.mean( fit_times, axis = 1 )
+    fit_times_std = np.std( fit_times, axis = 1 )
+
+    # Plot learning curve
+    axes[0].grid()
+    axes[0].fill_between( train_sizes, train_scores_mean - train_scores_std, train_scores_mean + train_scores_std, alpha=0.1, color="r", )
+    axes[0].fill_between( train_sizes, test_scores_mean - test_scores_std, test_scores_mean + test_scores_std, alpha = 0.1, color = "g", )
+    axes[0].plot( train_sizes, train_scores_mean, "o-", color = "r", label = "Training score" )
+    axes[0].plot( train_sizes, test_scores_mean, "o-", color = "g", label = "Cross-validation score" )
+    axes[0].legend( loc = "best" )
+
+    # Plot n_samples vs fit_times
+    axes[1].grid()
+    axes[1].plot( train_sizes, fit_times_mean, "o-" )
+    axes[1].fill_between( train_sizes, fit_times_mean - fit_times_std, fit_times_mean + fit_times_std, alpha = 0.1, )
+    axes[1].set_xlabel( "Training examples" )
+    axes[1].set_ylabel( "fit_times" )
+    axes[1].set_title( "Scalability of the model" )
+
+    # Plot fit_time vs score
+    fit_time_argsort = fit_times_mean.argsort()
+    fit_time_sorted = fit_times_mean[ fit_time_argsort ]
+    test_scores_mean_sorted = test_scores_mean[ fit_time_argsort ]
+    test_scores_std_sorted = test_scores_std[ fit_time_argsort ]
+    axes[2].grid()
+    axes[2].plot( fit_time_sorted, test_scores_mean_sorted, "o-" )
+    axes[2].fill_between( fit_time_sorted, test_scores_mean_sorted - test_scores_std_sorted, test_scores_mean_sorted + test_scores_std_sorted, alpha=0.1, )
+    axes[2].set_xlabel( "fit_times" )
+    axes[2].set_ylabel( "Score" )
+    axes[2].set_title( "Performance of the model" )
 
 #################################################
 #     box_plot
@@ -72,7 +125,10 @@ def modelling( model, str_name, X, Y ):
     print( "Model:", cl( str_name, "green" ) )
     num_folds = int( args.n_of_folds )
     kfold = KFold( n_splits = num_folds, random_state = 7, shuffle = True )
-    MAE_vs_fold( kfold, X, Y )
+    
+    # Plotting learning curve to check for possible overfitting
+    plot_learning_curve( model, str_name, X, Y )
+    save_img( str_name.replace( " ", "_" ), "{}/learning_curves".format( model_path ) )
     
     # Accuracy
     result_acc = cross_val_score( model, X, Y, cv = kfold, scoring = "accuracy" )
