@@ -29,6 +29,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
 
 # Personal modules
 from utils import save_img, plot_learning_curve
@@ -81,6 +82,15 @@ def modelling( model, str_name, X, Y ):
     
     # Accuracy
     result_acc = cross_val_score( model, X, Y, cv = kfold, scoring = "accuracy" )
+    if result_acc.mean()*100.0 == 100:
+        acc_label = cl( "Overfitting", "red" )
+    if result_acc.mean()*100.0 >= 99 and result_acc.mean()*100.0 <= 100:
+        acc_label = cl( "Possible overfitting", "red" )
+    elif result_acc.mean()*100.0 >= 90 and result_acc.mean()*100.0 <= 99:
+        acc_label = cl( "OK", "cyan" )
+    else:
+        acc_label = cl( "Low accuracy", "red" )
+    print( "Status: {}".format( acc_label ) )
     print( "- Accuracy: ", end = "" )
     print( cl( "%.3f%% +/- %.3f%%" % ( result_acc.mean()*100.0, result_acc.std()*100.0 ), "yellow" ) )
 
@@ -143,9 +153,11 @@ def hyperparametrization( model, X, Y ):
             "degree": np.arange( 1, 10 ),
             "gamma": [ "scale", "auto" ]
             }
-    elif type( model ).__name__ == "GaussianNB":
-        param_grid = {}
-    elif type( model ).__name__ == "LogisticRegression":
+    elif type( model ).__name__ == "RandomForestClassifier":
+        param_grid = { 
+            "criterion": [ "gini", "entropy", "log_loss" ]
+            }
+    else:
         param_grid = {}
        
     # Applying grid search 
@@ -181,9 +193,10 @@ def main():
     models.append( LogisticRegression( max_iter = 500, penalty = "l1", solver = "liblinear" ) )
     models.append( LinearDiscriminantAnalysis() )
     models.append( KNeighborsClassifier( metric = "manhattan", n_neighbors = 1 ) )
-    models.append( DecisionTreeClassifier() )
+    models.append( DecisionTreeClassifier( max_depth = 10 ) )
     models.append( GaussianNB() )
     models.append( SVC( gamma = "scale", probability = True, degree = 1 ) )
+    models.append( RandomForestClassifier( n_jobs = 2, random_state = 1 ) )
     for index, model_name in enumerate( models ):
         if index != 0:
             print()
@@ -195,7 +208,7 @@ def main():
             print( "Hyperparametrization:", hyperparametrization( model_name, X, Y ) )
     
     # Doing box plots
-    names = [ "LR", "LDA", "KNN", "CART", "NB", "SVM" ]
+    names = [ "LR", "LDA", "KNN", "CART", "NB", "SVM", "RFC" ]
     box_plot( names, results_acc, "accuracy" )
     box_plot( names, results_nll, "negative log-loss" )
     box_plot( names, results_auc, "area under the ROC curve" )

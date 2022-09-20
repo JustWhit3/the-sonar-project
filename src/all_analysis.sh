@@ -29,5 +29,5 @@ if [ "$1" == "" ] || [ "$1" == "modelling" ] ; then
     ./modelling.py \
     --data="../data/processed_data.csv" \
     --n_of_folds=10 \
-    --hyperparametrization="off"
+    --hyperparametrization="on"
 fi

@@ -10,7 +10,7 @@ Author: Gianluca Bianco
 #################################################
 
 # Generic modules
-import sys, os
+import os
 from emoji import emojize
 from termcolor import colored as cl
 import argparse as ap

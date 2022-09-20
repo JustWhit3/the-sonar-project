@@ -5,6 +5,7 @@
 data/*
 img/tests
 notes.txt
+venv
 
 ############################################
 #     Binary files
