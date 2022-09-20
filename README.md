@@ -47,7 +47,7 @@ First of all `cd` the `src` directory.
 To run the data preprocessing part:
 
 ```Bash
-./all_analysis.sh preprocessing
+./all_analysis.sh processing
 ```
 
 To run the modelling part:
