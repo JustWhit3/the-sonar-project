@@ -74,6 +74,14 @@ These procedures have been applied, in the following order, for data preprocessi
 
 Some control plots used for feature exploration have been produced:
 
-<img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/histograms.png"  width = "450">
+<p align="center"><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/histograms.png" height=220></p>
+
+<img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/density.png"  width = "450">
+
+<img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/scatter_matrix.png"  width = "450">
+
+<img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/box.png"  width = "450">
+
+<img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/correlation.png"  width = "450">
 
 ## Modelling
