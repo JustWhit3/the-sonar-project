@@ -72,7 +72,7 @@ These procedures have been applied, in the following order, for data preprocessi
 - **Data standardization**: through the [`StandardScaler`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html) which standardize feature by removing the mean and scaling to unit variance.
 - **Data normalization**: through the [`Normalizer`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.Normalizer.html) algorithm, which normalize samples individually to unit norm.
 
-Some control plots used for feature exploration have been produced:
+Some control plots used for feature exploration have then been produced after data manipulation:
 
 <p align="center"><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/histograms.png" width = "650"></p>
 
@@ -85,3 +85,5 @@ Some control plots used for feature exploration have been produced:
 <p align="center"><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/correlation.png" width = "650"></p>
 
 ## Modelling
+
+Work in progress...
