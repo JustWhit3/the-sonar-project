@@ -143,22 +143,27 @@ def utility_plots( data ):
     dim = int( int( args.n_of_features ) / 3 )
     dimension = ( dim, dim )
     
+    # Plots settings
+    plt.rcParams[ "figure.figsize" ] = [ 16, 16 ]
+    
     # Histograms
     print( "- Printing histograms of each column ", end = "" )
     data.hist()
-    plt.rcParams[ "figure.figsize" ] = [ 16, 16 ]
+    plt.tight_layout()
     save_img( "histograms", utility_path )
     print( emojize( ":check_mark_button:" ) )
     
     # Density plots
     print( "- Printing density plots ", end = "" )
     data.plot( kind = "density", subplots = True, layout = dimension, sharex = False )
+    plt.tight_layout()
     save_img( "density", utility_path )
     print( emojize( ":check_mark_button:" ) )
     
     # Box plots
     print( "- Printing box plots ", end = "" )
     data.plot( kind = "box", layout = dimension, sharex = False, sharey = False )
+    plt.tight_layout()
     save_img( "box", utility_path )
     print( emojize( ":check_mark_button:" ) )
     
@@ -175,12 +180,14 @@ def utility_plots( data ):
     names = [ str( name ) for name in range( 0, 14 ) ]
     ax.set_xticklabels( names )
     ax.set_yticklabels( names )
+    plt.tight_layout()
     save_img( "correlation", utility_path )
     print( emojize( ":check_mark_button:" ) )
     
     # Scatter matrix
     print( "- Printing scatter matrix ", end = "" )
     pd.plotting.scatter_matrix( data )
+    plt.tight_layout()
     save_img( "scatter_matrix", utility_path )
     print( emojize( ":check_mark_button:" ) )
 
