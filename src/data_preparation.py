@@ -145,6 +145,7 @@ def utility_plots( data ):
     
     # Plots settings
     plt.rcParams[ "figure.figsize" ] = [ 16, 16 ]
+    plt.rcParams.update({'font.size': 22})
     
     # Histograms
     print( "- Printing histograms of each column ", end = "" )
