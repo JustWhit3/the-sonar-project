@@ -11,8 +11,8 @@ Author: Gianluca Bianco
 
 # Generic modules
 from termcolor import colored as cl
-import sys
 import argparse as ap
+import warnings
 
 # Data science
 import pandas as pd
@@ -35,9 +35,9 @@ from sklearn.ensemble import RandomForestClassifier
 from utils import save_img, plot_learning_curve
 
 #################################################
-#     box_plot
+#     score_plot
 #################################################
-def box_plot( names, scores, label ):
+def score_plots( names, scores, label ):
     """
     Function used to produce box plot of "scores" with "names" features.
 
@@ -47,12 +47,28 @@ def box_plot( names, scores, label ):
         label (str): metric type used for box plots.
     """
 
-    fig = plt.figure()
-    fig.suptitle( "Algorithms comparison ({})".format( label ) )
-    ax = fig.add_subplot( 111 )
+    # Box plots
+    fig_box = plt.figure()
+    fig_box.suptitle( "Algorithms comparison ({})".format( label ) )
+    ax_box = fig_box.add_subplot( 111 )
     plt.boxplot( scores )
-    ax.set_xticklabels( names )
+    plt.tight_layout()
+    ax_box.set_xticklabels( names )
     save_img( label.replace( " ", "_" ), "{}/box_plots".format( model_path ) )
+
+    # Bar plots
+    fig_bar = plt.figure()
+    fig_bar.suptitle( "Algorithms comparison ({})".format( label ) )
+    ax_bar = fig_bar.add_subplot( 111 )
+    if label != "negative log-loss":
+        ax_bar.set_ylim( ymin = 0.7 )
+    mean_scores = []
+    for score in scores:
+        mean_scores.append( score.mean() )
+    plt.bar( names, mean_scores )
+    warnings.filterwarnings("ignore")
+    ax_bar.set_xticklabels( names )
+    save_img( label.replace( " ", "_" ), "{}/bar_plots".format( model_path ) )
 
 #################################################
 #     splitting_dataset
@@ -209,9 +225,9 @@ def main():
     
     # Doing box plots
     names = [ "LR", "LDA", "KNN", "CART", "NB", "SVM", "RFC" ]
-    box_plot( names, results_acc, "accuracy" )
-    box_plot( names, results_nll, "negative log-loss" )
-    box_plot( names, results_auc, "area under the ROC curve" )
+    score_plots( names, results_acc, "accuracy" )
+    score_plots( names, results_nll, "negative log-loss" )
+    score_plots( names, results_auc, "area under the ROC curve" )
 
 if __name__ == "__main__":
     
