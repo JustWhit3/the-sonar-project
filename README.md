@@ -89,7 +89,7 @@ The following procedures have been applied, in this order, for data preprocessin
 
 Some control plots used for feature exploration have then been produced after data manipulation:
 
-<p align="center">Histograms</br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/histograms.png" width = "650"></p>
+<p align="center">**Histograms**</br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/histograms.png" width = "650"></p>
 
 <p align="center"><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/density.png" width = "650"></p>
 
