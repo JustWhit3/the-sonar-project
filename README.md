@@ -1,6 +1,17 @@
-# The Sonar Project
+<p align="center"><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/logo.svg" height=220></p>
 
-Application of a machine learning classification algorithm to the Sonar dataset. Project for the course "Applied Machine Learning (Basic)" at PhD in Physics.
+<h3 align="center">Application of machine learning to classify to the Sonar data. </h3>
+<p align="center">
+  <img title="v0.0" alt="v0.0" src="https://img.shields.io/badge/version-v0.0-informational?style=flat-square">
+  <img title="MIT License" alt="license" src="https://img.shields.io/badge/license-MIT-informational?style=flat-square">
+	<img title="Python 3.10" alt="Python 3.10" src="https://img.shields.io/badge/Python-3.10-informational?style=flat-square"><br/>
+	<img title="Code size" alt="code size" src="https://img.shields.io/github/languages/code-size/JustWhit3/the-sonar-project?color=red">
+	<img title="Repo size" alt="repo size" src="https://img.shields.io/github/repo-size/JustWhit3/the-sonar-project?color=red">
+	<img title="Lines of code" alt="total lines" src="https://img.shields.io/tokei/lines/github/JustWhit3/the-sonar-project?color=red"></br>
+  <img title="codeq" alt="codeq" src="https://github.com/JustWhit3/the-sonar-project/actions/workflows/codeql-analysis.yml/badge.svg">
+</p>
+
+***
 
 ## Table of contents
 
