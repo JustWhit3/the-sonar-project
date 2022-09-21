@@ -47,18 +47,22 @@ def score_plots( names, scores, label ):
         label (str): metric type used for box plots.
     """
 
+    # Plots settings
+    plt.rcParams[ "figure.figsize" ] = [ 16, 12 ]
+    plt.rcParams.update({'font.size': 22})
+
     # Box plots
     fig_box = plt.figure()
-    fig_box.suptitle( "Algorithms comparison ({})".format( label ) )
+    fig_box.suptitle( "Models comparison ({})".format( label ) )
     ax_box = fig_box.add_subplot( 111 )
     plt.boxplot( scores )
-    plt.tight_layout()
     ax_box.set_xticklabels( names )
+    plt.tight_layout()
     save_img( label.replace( " ", "_" ), "{}/box_plots".format( model_path ) )
 
     # Bar plots
     fig_bar = plt.figure()
-    fig_bar.suptitle( "Algorithms comparison ({})".format( label ) )
+    fig_bar.suptitle( "Models comparison ({})".format( label ) )
     ax_bar = fig_bar.add_subplot( 111 )
     if label != "negative log-loss":
         ax_bar.set_ylim( ymin = 0.7 )
@@ -66,10 +70,11 @@ def score_plots( names, scores, label ):
     for score in scores:
         mean_scores.append( score.mean() )
     plt.bar( names, mean_scores )
+    ax_bar.set_xlabel( "Model" )
+    ax_bar.set_ylabel( "Score" )
     warnings.filterwarnings("ignore")
     ax_bar.set_xticklabels( names )
     save_img( label.replace( " ", "_" ), "{}/bar_plots".format( model_path ) )
-
 
 #################################################
 #     splitting_dataset

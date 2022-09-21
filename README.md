@@ -138,6 +138,8 @@ Results for each metric is shown below:
 
 <p align="center"><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/bar_plots/negative_log-loss.png" width = "650"></p>
 
-Also hyperparametrization using the [`GridSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) algorithm is used, in order to choose the best parameters combination for each model and increase its scores.
+Hyperparametrization using the [`GridSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) algorithm is used, in order to choose the best parameters combination for each model and increase its scores.
 
-Learning curves plot.
+Learning curves of training vs test sets are provided below as a cross-check to investigate possible overfitting:
+
+<p align="center"><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/LogisticRegression.png" width = "650"></p>
