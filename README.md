@@ -132,11 +132,11 @@ For each of them, the following metrics are computed:
 
 Results for each metric is shown below:
 
-<p align="center"><b>Accuracy</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/accuracy.png" width = "650"></p>
+<p align="center"><b>Accuracy</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/bar_plots/accuracy.png" width = "650"></p>
 
-<p align="center"><b>Area Under the ROC Curve (AUC)</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/area_under_the_ROC_curve.png" width = "650"></p>
+<p align="center"><b>Area Under the ROC Curve (AUC)</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/bar_plots/area_under_the_ROC_curve.png" width = "650"></p>
 
-<p align="center"><b>Negative log-loss</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/negative_log-loss.png" width = "650"></p>
+<p align="center"><b>Negative log-loss</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/bar_plots/negative_log-loss.png" width = "650"></p>
 
 Also hyperparametrization using the [`GridSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) algorithm is used, in order to choose the best parameters combination for each model and increase its scores.
 
