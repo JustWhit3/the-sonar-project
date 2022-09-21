@@ -91,13 +91,13 @@ Some control plots used for feature exploration have then been produced after da
 
 <p align="center"><b>Histograms</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/histograms.png" width = "650"></p>
 
-<p align="center"></br><b>Histograms</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/density.png" width = "650"></p>
+<p align="center"><b>Density Plots</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/density.png" width = "650"></p>
 
-<p align="center"><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/scatter_matrix.png" width = "650"></p>
+<p align="center"><b>Scatter Matrix</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/scatter_matrix.png" width = "650"></p>
 
-<p align="center"><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/box.png" width = "650"></p>
+<p align="center"><b>Box Plots</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/box.png" width = "650"></p>
 
-<p align="center"><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/correlation.png" width = "650"></p>
+<p align="center"><b>Correlation Matrix</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/correlation.png" width = "650"></p>
 
 ## Modelling
 
