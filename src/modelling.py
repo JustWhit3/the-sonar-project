@@ -49,7 +49,7 @@ def score_plots( names, scores, label ):
 
     # Box plots
     fig_box = plt.figure()
-    fig_box.suptitle( "Algorithms comparison ({})".format( label ) )
+    fig_box.suptitle( label )
     ax_box = fig_box.add_subplot( 111 )
     plt.boxplot( scores )
     plt.tight_layout()
@@ -58,7 +58,7 @@ def score_plots( names, scores, label ):
 
     # Bar plots
     fig_bar = plt.figure()
-    fig_bar.suptitle( "Algorithms comparison ({})".format( label ) )
+    fig_bar.suptitle( label )
     ax_bar = fig_bar.add_subplot( 111 )
     if label != "negative log-loss":
         ax_bar.set_ylim( ymin = 0.7 )
