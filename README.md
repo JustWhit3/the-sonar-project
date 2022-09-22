@@ -142,4 +142,4 @@ Hyperparametrization using the [`GridSearchCV`](https://scikit-learn.org/stable/
 
 Learning curves for accuracy metric of training vs test sets are provided below as a cross-check to investigate possible overfitting of each model:
 
-<p align="center"><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/LogisticRegression.png" width = "750"></p>
+<p align="center"><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/LogisticRegression.png"></p>
