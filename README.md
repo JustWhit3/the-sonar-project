@@ -23,7 +23,6 @@
 - [Modelling](#modelling)
   - [Metrics comparison](#metrics-comparison)
   - [Learning curves](#learning-curves)
-- [Algorithms fine-tuning](#algorithms-fine-tuning)
 - [Conclusions](#conclusions)
 
 ## Introduction
@@ -193,10 +192,6 @@ The training score doesn’t change much by adding more examples. But the cross-
 <p align="center"><b>SVC</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/SVC.png"></p>
 
 The training and cross-validation accuracy are approaching each other the more the training samples. So, even increasing training examples, the situation will not improve much. Fit times will increase, but we will not obtain huge improvement on accuracy.
-
-## Algorithms fine-tuning
-
-Work in progress...
 
 ## Conclusions
 
