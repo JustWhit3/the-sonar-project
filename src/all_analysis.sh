@@ -30,3 +30,14 @@ if [ "$1" == "" ] || [ "$1" == "modelling" ] ; then
     --data="../data/processed_data.csv" \
     --hyperparametrization="on"
 fi
+
+# Getting final results
+if [ "$1" == "" ] || [ "$1" == "results" ] ; then
+    echo "##################################################"
+    echo "#     Results"
+    echo "##################################################"
+    echo ""
+
+    ./results.py \
+    --data="../data/processed_data.csv"
+fi

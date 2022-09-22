@@ -23,11 +23,12 @@
 - [Modelling](#modelling)
   - [Metrics comparison](#metrics-comparison)
   - [Learning curves](#learning-curves)
-- [Conclusions](#conclusions)
+  - [Hyperparametrization](#hyperparametrization)
+- [Final results](#final-results)
 
 ## Introduction
 
-This project is related to the course [Applied Machine Learning (Basic)](https://www.unibo.it/it/didattica/insegnamenti/insegnamento/2020/455026) at PhD in Physics. It consists of the application of machine learning to classify the [Sonar](https://www.kaggle.com/datasets/ypzhangsam/sonaralldata) data and discriminate between *rocks* and *minerals*.
+This project is related to the course [Applied Machine Learning (Basic)](https://www.unibo.it/it/didattica/insegnamenti/insegnamento/2020/455026) at PhD in Physics. It consists of the application of machine learning to classify the [Sonar](https://www.kaggle.com/datasets/ypzhangsam/sonaralldata) data and discriminate between *rocks* and *minerals*.  It is widely used by the machine learning users to evaluate the capabilities of their algorithms.
 
 Since this project is related to the basic part of the course, only basic machine learning algorithms for binary classification will be used and neural networks will not be considered.
 
@@ -68,6 +69,12 @@ To run the modelling part:
 
 ```Bash
 ./all_analysis.sh modelling
+```
+
+To run the final results extraction:
+
+```Bash
+./all_analysis.sh results
 ```
 
 To run the entire analysis:
@@ -115,7 +122,7 @@ Some control plots used for feature exploration have then been produced after da
 
 ## Modelling
 
-Modelling studies have been performed on the processed data obtained with the procedure described in the previous section. First of all, data have been split into *training* and *test* sets using the [`kFold`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.KFold.html) cross-validator.
+Modelling studies have been performed on the processed data obtained with the procedure described in the previous section. First of all, data have been split into *training* and *test* sets using the [`ShuffleSplit`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html) cross-validator, which create a random split of the data, but repeat multiple times the process of splitting and evaluation of the algorithm.
 
 Several models have been used to perform the classification:
 
@@ -126,6 +133,18 @@ Several models have been used to perform the classification:
 - [`GaussianNB`](https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html).
 - [`SVC`](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html).
 - [`RandomForestClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html).
+
+### Hyperparametrization
+
+Hyperparametrization using the [`GridSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) algorithm has been used, in order to choose the best parameters combination for each model and improve their scores.
+
+These combinations have been used to fine-tune the following models:
+
+- `LogisticRegression(max_iter=500, penalty='l1', solver='liblinear')`.
+- `KNeighborsClassifier(metric='manhattan', n_neighbors=1)`.
+- `DecisionTreeClassifier(max_depth=10)`.
+- `SVC(degree=1, gamma='auto', probability=True)`.
+- `RandomForestClassifier(n_jobs=2, random_state=1)`.
 
 ### Metrics comparison
 
@@ -155,7 +174,7 @@ Results for each metric is shown below:
   <img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/box_plots/negative_log-loss.png" width = "400">
 </p>
 
-Hyperparametrization using the [`GridSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) algorithm is used, in order to choose the best parameters combination for each model and increase its scores.
+With such high scores it is better to check if some kind of overfitting has been performed, therefore the needing of learning curves plotting is required.
 
 ### Learning curves
 
@@ -191,8 +210,18 @@ The training score doesn’t change much by adding more examples. But the cross-
 
 <p align="center"><b>SVC</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/SVC.png"></p>
 
-The training and cross-validation accuracy are approaching each other the more the training samples. So, even increasing training examples, the situation will not improve much. Fit times will increase, but we will not obtain huge improvement on accuracy.
+The training score doesn’t change much by adding more examples. But the cross-validation score definitely does. This means that adding more examples over the ones we currently have is probably not required.
 
-## Conclusions
+## Final results
 
-Work in progres...
+Final results are obtained by computing the accuracy over the test set produced by each split of the [`ShuffleSplit`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html) cross-validator and results is averaged for each model.
+
+Final results are the following:
+
+- `LogisticRegression`: 98.725%
+- `LinearDiscriminantAnalysis`: 95.913%
+- `KNeighborsClassifier`: 99.797%
+- `DecisionTreeClassifier:` 99.493%
+- `GaussianNB`: 92.217%
+- `SVC`: 99.594%
+- `RandomForestClassifier`: 99.594%

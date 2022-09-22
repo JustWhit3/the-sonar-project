@@ -3,7 +3,7 @@
 ############################################
 .vscode
 data/*
-img/tests
+**/tests
 notes.txt
 venv
 

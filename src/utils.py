@@ -17,6 +17,7 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.model_selection import learning_curve
+from joblib import dump, load
 
 #################################################
 #     save_img
@@ -118,6 +119,57 @@ def plot_learning_curve( estimator, title, X, y, axes = None, ylim = None, cv = 
     axes[2].set_title( "Performance of the model" )
     
     return plt
+
+#################################################
+#     save_model
+#################################################
+def save_model( model, name, save_path ):
+    """
+    Function used to save a machine learning model in a specific path.
+
+    Args:
+        model (sklearn): the ML model.
+        name (str): the model name.
+        save_path (str): the path in which you want to save the model.
+    
+    Testing:
+        >>> from sklearn.linear_model import LogisticRegression
+        >>> model = LogisticRegression()
+        >>> save_model( model, "logistic", "../models/tests" )
+        >>> os.path.exists( "../models/tests/logistic.joblib" )
+        True
+    """
+    
+    # Create the path if it doesn't exist yet
+    if not os.path.exists( save_path ):
+        os.makedirs( save_path )
+    
+    # Save the model
+    dump( model, os.path.join( save_path, "{}.joblib".format( name ) ) )
+
+#################################################
+#     load_model
+#################################################
+def load_model( name, path ):
+    """
+    Function used to load a particular machine learning model.
+
+    Args:
+        name (str): the ML model name.
+        path (str): the save path of the model.
+
+    Returns:
+        sklearn: the loaded model.
+
+    Testing:
+        >>> from sklearn.linear_model import LogisticRegression
+        >>> model = LogisticRegression()
+        >>> save_model( model, "logistic", "../models/tests" )
+        >>> load_model( "logistic", "../models/tests" )
+        LogisticRegression()
+    """
+    
+    return load( os.path.join( path, "{}.joblib".format( name ) ) )
 
 #################################################
 #     Main

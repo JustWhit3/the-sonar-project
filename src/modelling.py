@@ -16,8 +16,7 @@ import warnings
 
 # Data science
 import pandas as pd
-from sklearn.model_selection import KFold, cross_val_score, cross_val_predict, GridSearchCV
-from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import cross_val_score, GridSearchCV
 import matplotlib.pyplot as plt
 import seaborn as sn
 import numpy as np
@@ -33,7 +32,7 @@ from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 
 # Personal modules
-from utils import save_img, plot_learning_curve
+from utils import save_img, plot_learning_curve, save_model
 
 #################################################
 #     score_plot
@@ -125,16 +124,9 @@ def modelling( model, str_name, X, Y ):
     result_auc = cross_val_score( model, X, Y, cv = kfold, scoring = "roc_auc" )
     print( "- Area under the ROC curve: ", end = "" )
     print( cl( "%.3f +/- %.3f" % ( result_auc.mean(), result_auc.std() ), "yellow" ) )
-
-    # Confusion matrix
-    #print( "- Saving confusion matrix" )
-    #predicted = cross_val_predict( model, X, Y, cv = kfold )
-    #matrix = confusion_matrix( Y, predicted )
-    #df_cm = pd.DataFrame( matrix )
-    #plt.figure( figsize = ( 10,7 ) )
-    #sn.heatmap( df_cm, annot = True, cmap = "YlOrRd", fmt = "d" )
-    #plt.title( str_name )
-    #save_img( str_name.replace( " ", "_" ), "{}/confusion_matrix".format( model_path ) )
+    
+    # Saving the model
+    save_model( model, str_name, "../models" )
     
     return result_acc, result_nll, result_auc
 
@@ -216,7 +208,7 @@ def main():
     models.append( KNeighborsClassifier( metric = "manhattan", n_neighbors = 1 ) )
     models.append( DecisionTreeClassifier( max_depth = 10 ) )
     models.append( GaussianNB() )
-    models.append( SVC( gamma = "scale", probability = True, degree = 1 ) )
+    models.append( SVC( gamma = "auto", probability = True, degree = 1 ) )
     models.append( RandomForestClassifier( n_jobs = 2, random_state = 1 ) )
     for index, model_name in enumerate( models ):
         if index != 0:
