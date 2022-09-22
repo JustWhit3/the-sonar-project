@@ -23,6 +23,7 @@
 - [Modelling](#modelling)
   - [Metrics comparison](#metrics-comparison)
   - [Learning curves](#learning-curves)
+- [Algorithms fine-tuning](#algorithms-fine-tuning)
 - [Conclusions](#conclusions)
 
 ## Introduction
@@ -176,6 +177,10 @@ Learning curves for accuracy metric of training vs test sets are provided below 
 <p align="center"><b>RandomForestClassifier</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/RandomForestClassifier.png"></p>
 
 <p align="center"><b>SVC</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/SVC.png"></p>
+
+## Algorithms fine-tuning
+
+Work in progress...
 
 ## Conclusions
 
