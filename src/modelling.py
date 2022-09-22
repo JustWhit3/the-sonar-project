@@ -54,16 +54,16 @@ def score_plots( names, scores, label ):
 
     # Box plots
     fig_box = plt.figure()
-    fig_box.suptitle( "Models comparison ({})".format( label ) )
     ax_box = fig_box.add_subplot( 111 )
     plt.boxplot( scores )
     ax_box.set_xticklabels( names )
+    ax_box.set_xlabel( "Model" )
+    ax_box.set_ylabel( "Score" )
     plt.tight_layout()
     save_img( label.replace( " ", "_" ), "{}/box_plots".format( model_path ) )
 
     # Bar plots
     fig_bar = plt.figure()
-    fig_bar.suptitle( "Models comparison ({})".format( label ) )
     ax_bar = fig_bar.add_subplot( 111 )
     if label != "negative log-loss":
         ax_bar.set_ylim( ymin = 0.7 )
