@@ -21,6 +21,7 @@ from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import seaborn as sn
 import numpy as np
+from sklearn.model_selection import ShuffleSplit
 
 # Models
 from sklearn.linear_model import LogisticRegression
@@ -95,8 +96,7 @@ def modelling( model, str_name, X, Y ):
     
     # Using k-Fold cross-validation for train/test splitting
     print( "Model:", cl( str_name, "green" ) )
-    num_folds = int( args.n_of_folds )
-    kfold = KFold( n_splits = num_folds, random_state = 7, shuffle = True )
+    kfold = ShuffleSplit( n_splits = 100, test_size = 0.33, random_state = 7 )
 
     # Plotting learning curves for accuracy
     plot_learning_curve( model, "{} (accuracy)".format( str_name ), X, Y, cv = kfold, scoring = "accuracy" )
@@ -127,14 +127,14 @@ def modelling( model, str_name, X, Y ):
     print( cl( "%.3f +/- %.3f" % ( result_auc.mean(), result_auc.std() ), "yellow" ) )
 
     # Confusion matrix
-    print( "- Saving confusion matrix" )
-    predicted = cross_val_predict( model, X, Y, cv = kfold )
-    matrix = confusion_matrix( Y, predicted )
-    df_cm = pd.DataFrame( matrix )
-    plt.figure( figsize = ( 10,7 ) )
-    sn.heatmap( df_cm, annot = True, cmap = "YlOrRd", fmt = "d" )
-    plt.title( str_name )
-    save_img( str_name.replace( " ", "_" ), "{}/confusion_matrix".format( model_path ) )
+    #print( "- Saving confusion matrix" )
+    #predicted = cross_val_predict( model, X, Y, cv = kfold )
+    #matrix = confusion_matrix( Y, predicted )
+    #df_cm = pd.DataFrame( matrix )
+    #plt.figure( figsize = ( 10,7 ) )
+    #sn.heatmap( df_cm, annot = True, cmap = "YlOrRd", fmt = "d" )
+    #plt.title( str_name )
+    #save_img( str_name.replace( " ", "_" ), "{}/confusion_matrix".format( model_path ) )
     
     return result_acc, result_nll, result_auc
 
@@ -183,8 +183,7 @@ def hyperparametrization( model, X, Y ):
         param_grid = {}
        
     # Applying grid search 
-    num_folds = int( args.n_of_folds )
-    kfold = KFold( n_splits = num_folds, random_state = 7, shuffle = True )
+    kfold = ShuffleSplit( n_splits = 100, test_size = 0.33, random_state = 7 )
     grid = GridSearchCV( model, param_grid = param_grid, cv = kfold )
     grid.fit(X, Y)
     best_estimator = grid.best_estimator_
@@ -240,7 +239,6 @@ if __name__ == "__main__":
     # Argument parser settings
     parser = ap.ArgumentParser( description = "Argument parser for data preparation." ) 
     parser.add_argument( "--data", default = "../data/processed_data.csv", help = "Input dataset." )
-    parser.add_argument( "--n_of_folds", default = 5, help = "Number of folds used in the k-Fold algorithm. Common values: 3,5 or 10." )
     parser.add_argument( "--hyperparametrization", default = 5, help = "Display hyperparametrization studies (on/off)." )
     args = parser.parse_args()
 

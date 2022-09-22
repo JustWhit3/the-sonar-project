@@ -21,6 +21,8 @@
   - [Run](#run)
 - [Data preprocessing](#data-preprocessing)
 - [Modelling](#modelling)
+  - [Metrics comparison](#metrics-comparison)
+  - [Learning curves](#learning-curves)
 - [Conclusions](#conclusions)
 
 ## Introduction
@@ -125,7 +127,9 @@ Several models have been used to perform the classification:
 - [`SVC`](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html).
 - [`RandomForestClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html).
 
-For each of them, the following metrics are computed:
+### Metrics comparison
+
+For each model the following metrics are computed:
 
 - Accuracy.
 - Negative log-loss.
@@ -133,13 +137,27 @@ For each of them, the following metrics are computed:
 
 Results for each metric is shown below:
 
-<p align="center"><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/bar_plots/accuracy.png" width = "650"></p>
+<p align="center"><b>Accuracy</b></br></br></p>
+<p align="center">
+  <img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/bar_plots/accuracy.png" width = "500">
+  <img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/box_plots/accuracy.png" width = "500">
+</p>
 
-<p align="center">><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/bar_plots/area_under_the_ROC_curve.png" width = "650"></p>
+<p align="center"><b>Area Under the ROC Curve (AUC)</b></br></br></p>
+<p align="center">
+  <img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/bar_plots/area_under_the_ROC_curve.png" width = "500">
+  <img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/box_plots/area_under_the_ROC_curve.png" width = "500">
+</p>
 
-<p align="center"><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/bar_plots/negative_log-loss.png" width = "650"></p>
+<p align="center"><b>Negative log-loss</b></br></br></p>
+<p align="center">
+  <img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/bar_plots/negative_log.png" width = "500">
+  <img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/box_plots/negative_log.png" width = "500">
+</p>
 
 Hyperparametrization using the [`GridSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) algorithm is used, in order to choose the best parameters combination for each model and increase its scores.
+
+### Learning curves
 
 Learning curves for accuracy metric of training vs test sets are provided below as a cross-check to investigate possible overfitting of each model:
 
