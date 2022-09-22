@@ -164,19 +164,35 @@ Learning curves for accuracy metric of training vs test sets are provided below 
 
 <p align="center"><b>LogisticRegression</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/LogisticRegression.png"></p>
 
+The training and cross-validation accuracy are approaching each other the more the training samples. So, even increasing training examples, the situation will not improve much. Fit times will increase, but we will not obtain huge improvement on accuracy.
+
 <p align="center"><b>DecisionTreeClassifier</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/DecisionTreeClassifier.png"></p>
+
+The training score doesn’t change much by adding more examples. But the cross-validation score definitely does. This means that adding more examples over the ones we currently have is probably not required.
 
 <p align="center"><b>GaussianNB</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/GaussianNB.png"></p>
 
+The training score is very high at the beginning and slightly decreases and the cross-validation score is a bit low at the beginning and consistently increases. Both them are pretty good at the end.
+
 <p align="center"><b>KNeighborsClassifier</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/KNeighborsClassifier.png"></p>
+
+The training score doesn’t change much by adding more examples. But the cross-validation score definitely does. This means that adding more examples over the ones we currently have is probably not required.
 
 <p align="center"><b>LinearDiscriminantAnalysis</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/LinearDiscriminantAnalysis.png"></p>
 
+The training score is very high at the beginning and slightly decreases and the cross-validation score is a bit low at the beginning and consistently increases. Both them are pretty good at the end.
+
 <p align="center"><b>LogisticRegression</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/LogisticRegression.png"></p>
+
+The cross-validation score seems to increase with the number of training examples, so, probably, a larger number of samples could improve the accuracy.
 
 <p align="center"><b>RandomForestClassifier</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/RandomForestClassifier.png"></p>
 
+The training score doesn’t change much by adding more examples. But the cross-validation score definitely does. This means that adding more examples over the ones we currently have is probably not required.
+
 <p align="center"><b>SVC</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/SVC.png"></p>
+
+The training and cross-validation accuracy are approaching each other the more the training samples. So, even increasing training examples, the situation will not improve much. Fit times will increase, but we will not obtain huge improvement on accuracy.
 
 ## Algorithms fine-tuning
 
