@@ -21,6 +21,7 @@
   - [Run](#run)
 - [Data preprocessing](#data-preprocessing)
 - [Modelling](#modelling)
+- [Conclusions](#conclusions)
 
 ## Introduction
 
@@ -142,4 +143,22 @@ Hyperparametrization using the [`GridSearchCV`](https://scikit-learn.org/stable/
 
 Learning curves for accuracy metric of training vs test sets are provided below as a cross-check to investigate possible overfitting of each model:
 
-<p align="center"><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/LogisticRegression.png"></p>
+<p align="center"><b>LogisticRegression</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/LogisticRegression.png"></p>
+
+<p align="center"><b>DecisionTreeClassifier</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/DecisionTreeClassifier.png"></p>
+
+<p align="center"><b>GaussianNB</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/GaussianNB.png"></p>
+
+<p align="center"><b>KNeighborsClassifier</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/KNeighborsClassifier.png"></p>
+
+<p align="center"><b>LinearDiscriminantAnalysis</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/LinearDiscriminantAnalysis.png"></p>
+
+<p align="center"><b>LogisticRegression</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/LogisticRegression.png"></p>
+
+<p align="center"><b>RandomForestClassifier</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/RandomForestClassifier.png"></p>
+
+<p align="center"><b>SVC</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/modelling/learning_curves/accuracy/SVC.png"></p>
+
+## Conclusions
+
+Work in progres...
