@@ -146,6 +146,8 @@ These combinations have been used to fine-tune the following models:
 - `SVC(degree=1, gamma='auto', probability=True)`.
 - `RandomForestClassifier(n_jobs=2, random_state=1)`.
 
+> :warning: hyperparametrization is disabled by default, since it has been used only during the code development. To enable it you can open the [src/all_analysis.sh](https://github.com/JustWhit3/the-sonar-project/blob/main/src/all_analysis.sh) script and change the line `--hyperparametrization=off` into `--hyperparametrization==on`; pay attention that this may slow a bit each model execution.
+
 ### Metrics comparison
 
 For each model the following metrics are computed:

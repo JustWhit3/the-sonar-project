@@ -28,7 +28,7 @@ if [ "$1" == "" ] || [ "$1" == "modelling" ] ; then
 
     ./modelling.py \
     --data="../data/processed_data.csv" \
-    --hyperparametrization="on"
+    --hyperparametrization="off"
 fi
 
 # Getting final results
