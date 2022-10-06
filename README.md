@@ -118,6 +118,8 @@ Some control plots used for feature exploration have then been produced after da
 
 <p align="center"><b>Box Plots</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/box.png" width = "650"></p>
 
+Box plots show some outliers in features 0, 11, 12 and 13.
+
 <p align="center"><b>Correlation Matrix</b></br></br><img src="https://github.com/JustWhit3/the-sonar-project/blob/main/img/utility/correlation.png" width = "650"></p>
 
 ## Modelling
